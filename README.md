@@ -109,7 +109,7 @@ You can arrange panes into different layouts for better visibility.
 - **Paste Text**: `Ctrl + b ]`
   - Pastes the copied text in the current pane.
 
-## configuration
+## basic configuration
 
 To customize `tmux`, you can create a `~/.config/tmux/tmux.conf` file in your config directory. Here’s an example configuration with some useful settings:
 
@@ -135,5 +135,44 @@ bind '\' split-window -h -c "#{pane_current_path}"
 
 To apply changes, either restart `tmux` or reload the configuration file with:
 ```bash
-tmux source-file ~/.tmux.conf
+tmux source-file ~/.config/tmux/tmux.conf
 ```
+
+## poweruser configurations
+
+There are many ways to further customize tmux to look **really** pretty. Experiment with any plugin managers and themes you like, but this one is a good way to get started.
+
+Start by cloning these repositories into your `~/.config/tmux` folder.
+```
+git clone https://github.com/tmux-plugins/tpm plugins/tpm
+git clone https://github.com/dracula/tmux plugins/tmux
+```
+
+Next, update your `tmux.conf` with the following lines:
+```
+# basic
+setw -g mode-keys vi
+set-option -g status-position top
+
+# plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'dracula/tmux'
+set -g @dracula-plugins "git battery time" 
+set -g @dracula-show-left-icon session
+set -g @dracula-show-empty-plugins false
+
+# binds
+bind -n C-L select-pane -L
+bind -n C-H select-pane -R
+bind -n C-K select-pane -U
+bind -n C-J select-pane -D
+
+# new panes
+bind c new-window -c "#{pane_current_path}"
+bind '-' split-window -c "#{pane_current_path}"
+bind '\' split-window -h -c "#{pane_current_path}"
+
+run -b '~/.config/tmux/plugins/tpm/tpm'
+```
+
+Finally, source the file again to get a new feel for tmux! (Follow the git links to find more options for customization)
