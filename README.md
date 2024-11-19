@@ -21,7 +21,7 @@ Or, to start a session with a name:
 tmux new -s <session_name>
 ```
 
-## basic bommands
+## basic commands
 
 `tmux` commands are usually prefixed with `Ctrl + b`, followed by another key or sequence.
 
